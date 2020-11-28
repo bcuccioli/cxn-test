@@ -1,0 +1,10 @@
+OASISFormat: 0.4
+Name:        cxn-test
+Version:     0.1
+Synopsis:    Test connections between hosts over various protocols.
+Authors:     Bryan Cuccioli
+License:     MIT
+Executable "cxn-test"
+  Path:       src
+  BuildTools: ocamlbuild
+  MainIs:     Main.ml

@@ -1,0 +1,11 @@
+# Vim swap files.
+*.swp
+
+# Oasis build artifacts.
+_build
+_tags
+setup.*
+myocamlbuild.ml
+
+# Output binary.
+*.byte
