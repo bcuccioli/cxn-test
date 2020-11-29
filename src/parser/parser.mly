@@ -1,6 +1,7 @@
 %{
   open Ast
   open Cmd
+  open Exceptions
   open Lexing
 
   let parse_error msg =

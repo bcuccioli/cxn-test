@@ -10,8 +10,6 @@ type stmt =
   | Alias of host * host
   | Test of Cmd.cmd * host * host * result
 
-exception ParseError of string
-
 module Debug = struct
 
   open Printf

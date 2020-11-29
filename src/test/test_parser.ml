@@ -1,4 +1,5 @@
 open Ast
+open Exceptions
 open OUnit2
 open Parse
 
