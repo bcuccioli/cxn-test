@@ -4,7 +4,18 @@ Version:     0.1
 Synopsis:    Test connections between hosts over various protocols.
 Authors:     Bryan Cuccioli
 License:     MIT
+BuildTools:  ocamlbuild
+
+Library "lib"
+  Path:    src/lib
+  Modules: Ast, Cmd
+
+Library "parser"
+  Path: src/parser
+  Modules: Parse
+  BuildDepends: lib
+
 Executable "cxn-test"
-  Path:       src
-  BuildTools: ocamlbuild
-  MainIs:     Main.ml
+  Path:         src
+  MainIs:       Main.ml
+  BuildDepends: parser

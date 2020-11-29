@@ -6,6 +6,9 @@ _build
 _tags
 setup.*
 myocamlbuild.ml
+*.mllib
+*.mldylib
 
 # Output binary.
 *.byte
+*.native
