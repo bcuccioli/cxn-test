@@ -3,8 +3,6 @@
   open Cmd
   open Lexing
 
-  exception ParseError of string
-
   let parse_error msg =
     let pos = Parsing.symbol_start_pos () in
     (* Lines are 0-indexed. *)

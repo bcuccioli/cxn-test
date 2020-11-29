@@ -19,3 +19,17 @@ Executable "cxn-test"
   Path:         src
   MainIs:       Main.ml
   BuildDepends: parser
+
+Executable "test_parser"
+  Build$:         flag(tests)
+  Path:           src/test
+  MainIs:         test_parser.ml
+  CompiledObject: best
+  Install:        false
+  BuildDepends:   parser, ounit2
+
+Test "test_parser"
+  Run$:             flag(tests)
+  TestTools:        test_parser
+  Command:          $test_parser
+  WorkingDirectory: src/test
