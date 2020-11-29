@@ -1,5 +1,6 @@
+open Cmd
+
 type host = string
-type cmd = string (* TODO *)
 
 type result =
   | Accept
@@ -7,7 +8,7 @@ type result =
 
 type stmt =
   | Alias of host * host
-  | Test of cmd * host * host * result
+  | Test of Cmd.cmd * host * host * result
 
 module Debug = struct
 
@@ -21,5 +22,6 @@ module Debug = struct
     | Alias (a, b) ->
       sprintf "Alias %s to %s" a b
     | Test (c, a, b, r) ->
-      sprintf "%s %s to %s = %s" c a b (result_str r)
+      sprintf "%s %s to %s = %s"
+        (Cmd.Debug.print c) a b (result_str r)
 end
