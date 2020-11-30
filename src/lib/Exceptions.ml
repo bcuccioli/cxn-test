@@ -4,7 +4,15 @@
  *)
 exception ParseError of string
 
+(*
+ * Represents "shadowing" of an alias by another alias, e.g. if we say
+ * `alias host ip1` and later `alias host ip2`.
+ *)
+exception ShadowError of string * string * string
+
 module Detail = struct
+
+  open Printf
 
   (*
    * Indicates that an unrecognized command was supplied for a test. This is
@@ -12,11 +20,14 @@ module Detail = struct
    *)
   exception CmdError of string
 
-  (* Render CmdError "x" as just "x". We need this because we embed CmdError
-    inside of ParseError. *)
   let () = Printexc.register_printer
       (function
+        (* Render CmdError "x" as just "x". We need this because we embed
+           CmdError inside of ParseError. *)
         | CmdError c -> Some c
+        (* Render ShadowError in a more readable way. *)
+        | ShadowError (a, v, w) -> Some (
+          sprintf "Alias %s to %s is shadowing; already aliased to %s" a v w)
         | _ -> None
       )
 

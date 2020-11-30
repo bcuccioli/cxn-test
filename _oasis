@@ -33,3 +33,17 @@ Test "test_parser"
   TestTools:        test_parser
   Command:          $test_parser
   WorkingDirectory: src/test
+
+Executable "test_bind"
+  Build$:         flag(tests)
+  Path:           src/test
+  MainIs:         test_bind.ml
+  CompiledObject: best
+  Install:        false
+  BuildDepends:   lib, ounit2
+
+Test "test_bind"
+  Run$:             flag(tests)
+  TestTools:        test_bind
+  Command:          $test_bind
+  WorkingDirectory: src/test
