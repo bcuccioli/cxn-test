@@ -23,10 +23,10 @@ let suite = "ShellTests" >::: [
     { test with cmd=Ping; usr=None };
 
   "test_ssh_user" >:: case
-    "ssh -o ConnectTimeout=10 me@127.0.0.1 'nc -zv 192.168.1.1 22'"
+    "ssh -o ConnectTimeout=10 me@127.0.0.1 'nc -nzv 192.168.1.1 22'"
     { test with cmd=Ssh };
   "test_ssh" >:: case
-    "ssh -o ConnectTimeout=10 127.0.0.1 'nc -zv 192.168.1.1 22'"
+    "ssh -o ConnectTimeout=10 127.0.0.1 'nc -nzv 192.168.1.1 22'"
     { test with cmd=Ssh; usr=None };
 
   "test_dns_user" >:: case

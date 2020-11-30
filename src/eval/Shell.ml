@@ -9,7 +9,7 @@ module Impl = struct
   let cmd_str h = function
     | Ping -> "ping -c 1 " ^ h
     | Dns -> "dig google.com @" ^ h
-    | Ssh -> "nc -zv " ^ h ^ " 22"
+    | Ssh -> "nc -nzv " ^ h ^ " 22"
 end
 
 let cmd test =
