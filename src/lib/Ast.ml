@@ -59,27 +59,3 @@ let bind stmts =
     in
   List.fold_left next [] stmts
     |> List.rev
-
-module Debug = struct
-
-  open Printf
-  module CD = Cmd.Debug
-
-  let result_str = function
-    | Accept -> "accept"
-    | Reject -> "reject"
-
-  let user_str = function
-    | Some u -> sprintf "(%s)" u
-    | None -> ""
-
-  let print = function
-    | Alias (a, b, u) ->
-      sprintf "Alias %s to %s %s" a b (user_str u)
-    | Test (c, a, b, r) ->
-      sprintf "%s %s to %s = %s" (CD.print c) a b (result_str r)
-
-  let print_test t =
-    sprintf "test: %s %s -> %s: %s"
-      (CD.print t.cmd) t.src t.dst (result_str t.res)
-end

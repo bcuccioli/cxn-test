@@ -8,7 +8,7 @@ BuildTools:  ocamlbuild
 
 Library "lib"
   Path:    src/lib
-  Modules: Ast, Cmd
+  Modules: Ast, Cmd, Print
 
 Library "parser"
   Path: src/parser
