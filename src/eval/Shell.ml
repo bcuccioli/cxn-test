@@ -6,18 +6,14 @@ module Impl = struct
     | Some u -> u ^ "@" ^ test.src
     | None -> test.src
 
-  let cmd_str = function
-    | Ping -> fun h -> Some ("ping -c 1 " ^ h)
-    | Dns -> fun h -> Some ("dig google.com @" ^ h)
-    | Ssh -> fun _ -> None
-
-  let wrapped_cmd_str = function
-    | Some s -> Printf.sprintf "'%s'" s
-    | None -> ""
+  let cmd_str h = function
+    | Ping -> "ping -c 1 " ^ h
+    | Dns -> "dig google.com @" ^ h
+    | Ssh -> "nc -zv " ^ h ^ " 22"
 end
 
 let cmd test =
   Printf.sprintf
-    "ssh -o ConnectTimeout=10 %s %s"
+    "ssh -o ConnectTimeout=10 %s '%s'"
     (Impl.host_str test)
-    (Impl.wrapped_cmd_str ((Impl.cmd_str test.cmd) test.dst))
+    (Impl.cmd_str test.dst test.cmd)
