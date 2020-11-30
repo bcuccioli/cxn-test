@@ -9,7 +9,7 @@
     }
 }
 
-let word = ['a'-'z']+
+let word = ['a'-'z' '0'-'9']['a'-'z' '0'-'9' '.']*
 let comment = '#'[^ '\n']*'\n'
 
 rule token = parse

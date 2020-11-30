@@ -5,15 +5,15 @@ open Parse
 
 let test_parse_success _ =
   let result = Parse.from_string
-    "alias a b (u)\n\
-    alias c d\n\
+    "alias a 127.0.0.1 (u)\n\
+    alias c 192.168.1.1\n\
     ping a -> c accept\n\
     ping b->d reject\n"
   in
   assert_equal
     [
-      Alias ("a", "b", Some "u");
-      Alias ("c", "d", None);
+      Alias ("a", "127.0.0.1", Some "u");
+      Alias ("c", "192.168.1.1", None);
       Test (Ping, "a", "c", Accept);
       Test (Ping, "b", "d", Reject);
     ]
@@ -21,28 +21,28 @@ let test_parse_success _ =
 
 let test_parse_trailing_comments_success _ =
   let result = Parse.from_string
-    "alias a b (u)# this is a comment\n\
-    alias c d #comment2\n"
+    "alias a 127.0.0.1 (u)# this is a comment\n\
+    alias c 192.168.1.1 #comment2\n"
   in
   assert_equal
     [
-      Alias ("a", "b", Some "u");
-      Alias ("c", "d", None);
+      Alias ("a", "127.0.0.1", Some "u");
+      Alias ("c", "192.168.1.1", None);
     ]
     result
 
 let test_parse_whitespace_success _ =
   let result = Parse.from_string
     "# full line comment\n\
-    alias a b # this is a comment\n\
+    alias a 127.0.0.1 # this is a comment\n\
     # another comment\n\
     \n\
-    alias c d (u) #comment2\n"
+    alias c 192.168.1.1 (u) #comment2\n"
   in
   assert_equal
     [
-      Alias ("a", "b", None);
-      Alias ("c", "d", Some "u");
+      Alias ("a", "127.0.0.1", None);
+      Alias ("c", "192.168.1.1", Some "u");
     ]
     result
 
