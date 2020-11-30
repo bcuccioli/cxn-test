@@ -20,7 +20,7 @@ let result = function
   | Reject -> "REJECT"
 
 let test t =
-  sprintf "%s: %s -> %s %s"
+  sprintf "%s:\t%s\t->\t%s\t%s"
     (cmd t.cmd)
     t.src
     t.dst
