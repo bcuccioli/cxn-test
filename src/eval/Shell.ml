@@ -8,7 +8,7 @@ module Impl = struct
 
   let cmd_str h = function
     | Ping -> "ping -c 1 " ^ h
-    | Dns -> "dig google.com @" ^ h
+    | Dns -> "nslookup google.com " ^ h
     | Ssh -> "netcat -nzv " ^ h ^ " 22"
 end
 

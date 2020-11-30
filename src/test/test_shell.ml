@@ -30,10 +30,10 @@ let suite = "ShellTests" >::: [
     { test with cmd=Ssh; usr=None };
 
   "test_dns_user" >:: case
-    "ssh -o ConnectTimeout=10 me@127.0.0.1 'dig google.com @192.168.1.1'"
+    "ssh -o ConnectTimeout=10 me@127.0.0.1 'nslookup google.com 192.168.1.1'"
     { test with cmd=Dns };
   "test_dns" >:: case
-    "ssh -o ConnectTimeout=10 127.0.0.1 'dig google.com @192.168.1.1'"
+    "ssh -o ConnectTimeout=10 127.0.0.1 'nslookup google.com 192.168.1.1'"
     { test with cmd=Dns; usr=None };
 ]
 
