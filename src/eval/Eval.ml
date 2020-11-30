@@ -1,9 +1,17 @@
 open Ast
 open Exceptions
 
+module Debug = struct
+  let on () =
+    try (Unix.getenv "DEBUG") = "on"
+    with Not_found -> false
+end
+
 module Impl = struct
 
   let success cmd =
+    if Debug.on () then print_endline ("> " ^ cmd);
+
     match Unix.system cmd with
       | Unix.WEXITED i -> i == 0
       | Unix.WSIGNALED i ->
