@@ -17,6 +17,8 @@ rule token = parse
   | ['\n']     { next_line lexbuf; NEWLINE }
   | [' ' '\t'] { token lexbuf }
   | "alias"    { ALIAS }
+  | "("        { LPAREN }
+  | ")"        { RPAREN }
   | "->"       { ARROW }
   | "accept"   { ACCEPT }
   | "reject"   { REJECT }

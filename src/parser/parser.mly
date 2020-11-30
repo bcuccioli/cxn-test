@@ -19,7 +19,7 @@
       parse_error msg
 %}
 
-%token ALIAS ARROW ACCEPT REJECT NEWLINE EOF
+%token ALIAS LPAREN RPAREN ARROW ACCEPT REJECT NEWLINE EOF
 %token <string> WORD
 
 %start stmts
@@ -29,7 +29,9 @@
 
 stmt:
   | ALIAS WORD WORD
-    { Ast.Alias ($2, $3) }
+    { Ast.Alias ($2, $3, None) }
+  | ALIAS WORD WORD LPAREN WORD RPAREN
+    { Ast.Alias ($2, $3, Some $5) }
   | WORD WORD ARROW WORD ACCEPT
     { Ast.Test ((cmd_parse $1), $2, $4, Ast.Accept) }
   | WORD WORD ARROW WORD REJECT

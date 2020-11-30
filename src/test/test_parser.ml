@@ -5,15 +5,15 @@ open Parse
 
 let test_parse_success _ =
   let result = Parse.from_string
-    "alias a b\n\
+    "alias a b (u)\n\
     alias c d\n\
     ping a -> c accept\n\
     ping b->d reject\n"
   in
   assert_equal
     [
-      Alias ("a", "b");
-      Alias ("c", "d");
+      Alias ("a", "b", Some "u");
+      Alias ("c", "d", None);
       Test (Ping, "a", "c", Accept);
       Test (Ping, "b", "d", Reject);
     ]
@@ -21,13 +21,13 @@ let test_parse_success _ =
 
 let test_parse_trailing_comments_success _ =
   let result = Parse.from_string
-    "alias a b # this is a comment\n\
+    "alias a b (u)# this is a comment\n\
     alias c d #comment2\n"
   in
   assert_equal
     [
-      Alias ("a", "b");
-      Alias ("c", "d");
+      Alias ("a", "b", Some "u");
+      Alias ("c", "d", None);
     ]
     result
 
@@ -37,12 +37,12 @@ let test_parse_whitespace_success _ =
     alias a b # this is a comment\n\
     # another comment\n\
     \n\
-    alias c d #comment2\n"
+    alias c d (u) #comment2\n"
   in
   assert_equal
     [
-      Alias ("a", "b");
-      Alias ("c", "d");
+      Alias ("a", "b", None);
+      Alias ("c", "d", Some "u");
     ]
     result
 

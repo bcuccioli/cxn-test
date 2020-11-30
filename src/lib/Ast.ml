@@ -2,13 +2,14 @@ open Cmd
 open Exceptions
 
 type host = string
+type user = string
 
 type result =
   | Accept
   | Reject
 
 type stmt =
-  | Alias of host * host
+  | Alias of host * host * user option
   | Test of Cmd.cmd * host * host * result
 
 type test = {
@@ -16,6 +17,7 @@ type test = {
   src: host;
   dst: host;
   res: result;
+  usr: user option;
 }
 
 (*
@@ -25,24 +27,33 @@ type test = {
  *)
 let bind stmts =
   let vars = Hashtbl.create (List.length stmts) in
+  let users = Hashtbl.create (List.length stmts) in
 
-  let find_default k = match Hashtbl.find_opt vars k with
+  let find_default t k = match Hashtbl.find_opt t k with
     | Some v -> v
     | None -> k in
 
+  let find_opt t k =
+    try Hashtbl.find t k
+    with Not_found -> None in
+
   let next tests stmt = match stmt with
-    | Alias (k, v) -> begin
+    | Alias (k, v, u) -> begin
       match Hashtbl.find_opt vars k with
         | Some w -> raise (ShadowError (k, v, w))
-        | None -> Hashtbl.add vars k v;
+        | None -> begin
+          Hashtbl.add vars k v;
+          Hashtbl.add users k u;
+        end;
       tests
     end
     | Test (cmd, src, dst, res) ->
       let t = {
         cmd = cmd;
-        src = find_default src;
-        dst = find_default dst;
-        res =  res;
+        src = find_default vars src;
+        dst = find_default vars dst;
+        res = res;
+        usr = find_opt users src;
       } in
       t::tests
     in
@@ -58,9 +69,13 @@ module Debug = struct
     | Accept -> "accept"
     | Reject -> "reject"
 
+  let user_str = function
+    | Some u -> sprintf "(%s)" u
+    | None -> ""
+
   let print = function
-    | Alias (a, b) ->
-      sprintf "Alias %s to %s" a b
+    | Alias (a, b, u) ->
+      sprintf "Alias %s to %s %s" a b (user_str u)
     | Test (c, a, b, r) ->
       sprintf "%s %s to %s = %s" (CD.print c) a b (result_str r)
 
