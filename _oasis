@@ -15,10 +15,15 @@ Library "parser"
   Modules: Parse
   BuildDepends: lib
 
+Library "eval"
+  Path: src/eval
+  Modules: Eval
+  BuildDepends: lib, unix
+
 Executable "cxn-test"
   Path:         src
   MainIs:       Main.ml
-  BuildDepends: parser
+  BuildDepends: parser, eval, ANSITerminal
 
 Executable "test_parser"
   Build$:         flag(tests)

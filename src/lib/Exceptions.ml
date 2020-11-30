@@ -10,6 +10,11 @@ exception ParseError of string
  *)
 exception ShadowError of string * string * string
 
+(*
+ * Indicates that the ssh process on the host machine ended unexpectedly.
+ *)
+exception ProcessError of string
+
 module Detail = struct
 
   open Printf
