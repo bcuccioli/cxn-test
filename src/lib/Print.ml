@@ -1,5 +1,3 @@
-open Ast
-open Cmd
 open Printf
 
 let user_str = function
@@ -7,13 +5,13 @@ let user_str = function
   | None -> ""
 
 let cmd = function
-  | Ping -> "ping"
-  | Ssh -> "ssh"
-  | Dns -> "dns"
+  | Cmd.Ping -> "ping"
+  | Cmd.Ssh -> "ssh"
+  | Cmd.Dns -> "dns"
 
 let result = function
-  | Accept -> "ACCEPT"
-  | Reject -> "REJECT"
+  | Ast.Accept -> "ACCEPT"
+  | Ast.Reject -> "REJECT"
 
-let test t =
+let test (t: Ast.test) =
   sprintf "%s:\t%s\t->\t%s\t%s" (cmd t.cmd) t.src t.dst (user_str t.usr)

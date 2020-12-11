@@ -1,5 +1,3 @@
-open Exceptions
-
 type cmd =
   | Ping
   | Ssh
@@ -9,4 +7,4 @@ let parse = function
   | "ping" -> Ping
   | "ssh" -> Ssh
   | "dns" -> Dns
-  | s -> raise (CmdError ("Unrecognized command: " ^ s))
+  | s -> raise (Exceptions.CmdError ("Unrecognized command: " ^ s))

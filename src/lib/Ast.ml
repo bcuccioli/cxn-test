@@ -1,6 +1,3 @@
-open Cmd
-open Exceptions
-
 type host = string
 
 type user = string
@@ -36,7 +33,7 @@ let bind stmts =
   let next tests = function
     | Alias (k, v, u) -> (
       match Hashtbl.find_opt vars k with
-        | Some w -> raise (ShadowError (k, v, w))
+        | Some w -> raise (Exceptions.ShadowError (k, v, w))
         | None ->
           Hashtbl.add vars k v;
           Hashtbl.add users k u;

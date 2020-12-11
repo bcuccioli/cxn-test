@@ -1,6 +1,3 @@
-open Ast
-open Exceptions
-
 module Debug = struct
   let on () = try Unix.getenv "DEBUG" = "on" with Not_found -> false
 end
@@ -11,11 +8,11 @@ let success cmd =
     | Unix.WEXITED i -> i == 0
     | Unix.WSIGNALED i ->
       raise
-        (ProcessError
+        (Exceptions.ProcessError
            (Printf.sprintf "The ssh process was killed by signal %d" i))
     | Unix.WSTOPPED i ->
       raise
-        (ProcessError
+        (Exceptions.ProcessError
            (Printf.sprintf "The ssh process was stopped by signal %d" i))
 
 type output = {
@@ -27,7 +24,7 @@ type output = {
 
 let result test =
   let result = Shell.cmd test |> success in
-  let actual = if result then Accept else Reject in
+  let actual = if result then Ast.Accept else Ast.Reject in
   {
     desc = Print.test test;
     exp = Print.result test.res;

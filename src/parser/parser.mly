@@ -1,15 +1,10 @@
 %{
-  open Ast
-  open Cmd
-  open Exceptions
-  open Lexing
-
   let parse_error msg =
     let pos = Parsing.symbol_start_pos () in
     (* Lines are 0-indexed. *)
     let line = pos.pos_lnum + 1 in
     let msg = Printf.sprintf "%s: line %d" msg line in
-    raise (ParseError msg)
+    raise (Exceptions.ParseError msg)
 
   let cmd_parse c =
     try
