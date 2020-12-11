@@ -1,10 +1,14 @@
 open Ast
 open Exceptions
+open Lexing
 open OUnit2
 open Parse
 
+let parse s =
+  Parse.from (fun () -> Lexing.from_string s)
+
 let test_parse_success _ =
-  let result = Parse.from_string
+  let result = parse
     "alias a 127.0.0.1 (u)\n\
     alias c 192.168.1.1\n\
     ping a -> c accept\n\
@@ -20,7 +24,7 @@ let test_parse_success _ =
     result
 
 let test_parse_trailing_comments_success _ =
-  let result = Parse.from_string
+  let result = parse
     "alias a 127.0.0.1 (u)# this is a comment\n\
     alias c 192.168.1.1 #comment2\n"
   in
@@ -32,7 +36,7 @@ let test_parse_trailing_comments_success _ =
     result
 
 let test_parse_whitespace_success _ =
-  let result = Parse.from_string
+  let result = parse
     "# full line comment\n\
     alias a 127.0.0.1 # this is a comment\n\
     # another comment\n\
@@ -47,7 +51,7 @@ let test_parse_whitespace_success _ =
     result
 
 let test_parse_bad_keyword_fail _ =
-  let go = fun () -> Parse.from_string
+  let go = fun () -> parse
     "alias a b\n\
     aliaz c d\n\
     ping a -> c accept\n\
@@ -58,7 +62,7 @@ let test_parse_bad_keyword_fail _ =
     go
 
 let test_parse_bad_command_fail _ =
-  let go = fun () -> Parse.from_string
+  let go = fun () -> parse
     "alias a b\n\
     alias c d\n\
     sshx a -> c accept\n"

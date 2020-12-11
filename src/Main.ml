@@ -11,7 +11,9 @@ let () =
     if Array.length Sys.argv < 2 then stdin else open_in Sys.argv.(1)
   in
 
-  let ast = Parse.from_channel chan in
+  let lexbuf = fun () -> Lexing.from_channel chan in
+  let ast = Parse.from lexbuf in
+
   close_in chan;
 
   List.iter

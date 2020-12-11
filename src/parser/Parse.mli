@@ -1,10 +1,5 @@
-(*
- * Parse from an input channel. This could for example represent a file
- * or stdin.
+(**
+ * Parse input into a list of statements. This function takes a lexbuf factory
+ * function as input.
  *)
-val from_channel : in_channel -> Ast.stmt list
-
-(*
- * Parse from a string. This is primarily useful for unit testing.
- *)
-val from_string : string -> Ast.stmt list
+val from : (unit -> Lexing.lexbuf) -> Ast.stmt list
