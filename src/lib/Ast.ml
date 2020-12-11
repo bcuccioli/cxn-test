@@ -21,11 +21,6 @@ type test = {
   usr: user option;
 }
 
-(*
- * "Bind" aliases to statements in order to form executable tests. We make a
- * single pass through the list of aliases and tests, meaning that aliases must
- * be defined before they are used. We explicitly prohibit shadowing of aliases.
- *)
 let bind stmts =
   let vars = Hashtbl.create (List.length stmts) in
   let users = Hashtbl.create (List.length stmts) in

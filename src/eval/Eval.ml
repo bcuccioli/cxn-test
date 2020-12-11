@@ -5,20 +5,18 @@ module Debug = struct
   let on () = try Unix.getenv "DEBUG" = "on" with Not_found -> false
 end
 
-module Impl = struct
-  let success cmd =
-    if Debug.on () then print_endline ("> " ^ cmd);
-    match Unix.system cmd with
-      | Unix.WEXITED i -> i == 0
-      | Unix.WSIGNALED i ->
-        raise
-          (ProcessError
-             (Printf.sprintf "The ssh process was killed by signal %d" i))
-      | Unix.WSTOPPED i ->
-        raise
-          (ProcessError
-             (Printf.sprintf "The ssh process was stopped by signal %d" i))
-end
+let success cmd =
+  if Debug.on () then print_endline ("> " ^ cmd);
+  match Unix.system cmd with
+    | Unix.WEXITED i -> i == 0
+    | Unix.WSIGNALED i ->
+      raise
+        (ProcessError
+           (Printf.sprintf "The ssh process was killed by signal %d" i))
+    | Unix.WSTOPPED i ->
+      raise
+        (ProcessError
+           (Printf.sprintf "The ssh process was stopped by signal %d" i))
 
 type output = {
   desc: string;
@@ -27,10 +25,9 @@ type output = {
   eq: bool;
 }
 
-let eval test = Shell.cmd test |> Impl.success
-
 let result test =
-  let actual = if eval test then Accept else Reject in
+  let result = Shell.cmd test |> success in
+  let actual = if result then Accept else Reject in
   {
     desc = Print.test test;
     exp = Print.result test.res;

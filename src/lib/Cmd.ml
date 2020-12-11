@@ -9,4 +9,4 @@ let parse = function
   | "ping" -> Ping
   | "ssh" -> Ssh
   | "dns" -> Dns
-  | _ -> raise (Detail.CmdError ("Unrecognized command: " ^ s))
+  | s -> raise (CmdError ("Unrecognized command: " ^ s))
