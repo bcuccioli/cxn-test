@@ -1,0 +1,9 @@
+break-cases=all
+cases-exp-indent=2
+exp-grouping=preserve
+field-space=tight-decl
+if-then-else=keyword-first
+match-indent=2
+match-indent-nested=always
+space-around-lists=false
+type-decl=sparse

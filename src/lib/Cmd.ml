@@ -5,8 +5,8 @@ type cmd =
   | Ssh
   | Dns
 
-let parse s = match s with
+let parse = function
   | "ping" -> Ping
   | "ssh" -> Ssh
   | "dns" -> Dns
-  | _ -> raise (Detail.CmdError ("Unrecognized command: "^s))
+  | _ -> raise (Detail.CmdError ("Unrecognized command: " ^ s))
