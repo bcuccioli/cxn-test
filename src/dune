@@ -1,0 +1,6 @@
+(executable
+  (name main)
+  (libraries
+    ANSITerminal
+    eval
+    parsed_ast))

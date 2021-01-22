@@ -4,11 +4,11 @@
     (* Lines are 0-indexed. *)
     let line = pos.pos_lnum + 1 in
     let msg = Printf.sprintf "%s: line %d" msg line in
-    raise (Exceptions.ParseError msg)
+    raise (Lib.Exceptions.ParseError msg)
 
   let cmd_parse c =
     try
-      Cmd.parse c
+      Lib.Cmd.parse c
     with e ->
       let msg = Printexc.to_string e in
       parse_error msg
@@ -18,19 +18,19 @@
 %token <string> WORD
 
 %start stmts
-%type <Ast.stmt list> stmts
+%type <Lib.Ast.stmt list> stmts
 
 %%
 
 stmt:
   | ALIAS WORD WORD
-    { Ast.Alias ($2, $3, None) }
+    { Lib.Ast.Alias ($2, $3, None) }
   | ALIAS WORD WORD LPAREN WORD RPAREN
-    { Ast.Alias ($2, $3, Some $5) }
+    { Lib.Ast.Alias ($2, $3, Some $5) }
   | WORD WORD ARROW WORD ACCEPT
-    { Ast.Test ((cmd_parse $1), $2, $4, Ast.Accept) }
+    { Lib.Ast.Test ((cmd_parse $1), $2, $4, Lib.Ast.Accept) }
   | WORD WORD ARROW WORD REJECT
-    { Ast.Test ((cmd_parse $1), $2, $4, Ast.Reject) }
+    { Lib.Ast.Test ((cmd_parse $1), $2, $4, Lib.Ast.Reject) }
 ;
 
 line:

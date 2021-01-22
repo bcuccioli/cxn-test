@@ -12,4 +12,4 @@ type output = {
  * Evaluate a test and return a record indicating the expectation and the
  * actual result.
  *)
-val result : Ast.test -> output
+val result : Lib.Ast.test -> output

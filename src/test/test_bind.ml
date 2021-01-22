@@ -1,6 +1,6 @@
-open Ast
-open Cmd
-open Exceptions
+open Lib.Ast
+open Lib.Cmd
+open Lib.Exceptions
 open OUnit2
 
 let test_bind_success _ =

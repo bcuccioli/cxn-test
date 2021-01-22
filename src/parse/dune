@@ -1,0 +1,9 @@
+(library
+  (name parsed_ast)
+  (libraries lib)
+  (preprocess (pps bisect_ppx --conditional))
+)
+
+(ocamllex lexer)
+
+(ocamlyacc (modules parser))

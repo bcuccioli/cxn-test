@@ -12,13 +12,13 @@ let () =
   in
 
   let lexbuf = fun () -> Lexing.from_channel chan in
-  let ast = Parse.from lexbuf in
+  let ast = Parsed_ast.from lexbuf in
 
   close_in chan;
 
   List.iter
     (fun test ->
-      let result = Eval.result test in
+      let result = Eval.Evaluate.result test in
       let status = if result.eq then "✓" else "✗" in
 
       let text =
@@ -27,4 +27,4 @@ let () =
 
       let p = if result.eq then Output.green else Output.red in
       p text)
-    (Ast.bind ast)
+    (Lib.Ast.bind ast)

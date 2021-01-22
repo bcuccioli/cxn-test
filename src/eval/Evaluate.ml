@@ -3,6 +3,7 @@ module Debug = struct
 end
 
 let success cmd =
+  let module Exceptions = Lib.Exceptions in
   if Debug.on () then print_endline ("> " ^ cmd);
   match Unix.system cmd with
     | Unix.WEXITED i -> i == 0
@@ -23,6 +24,7 @@ type output = {
 }
 
 let result test =
+  let open Lib in
   let result = Shell.cmd test |> success in
   let actual = if result then Ast.Accept else Ast.Reject in
   {

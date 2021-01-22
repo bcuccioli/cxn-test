@@ -1,8 +1,8 @@
-open Ast
-open Exceptions
-open Lexing
+open Lib.Ast
+open Lib.Exceptions
 open OUnit2
-open Parse
+
+module Parse = Parsed_ast
 
 let parse s =
   Parse.from (fun () -> Lexing.from_string s)

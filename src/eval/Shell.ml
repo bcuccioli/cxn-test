@@ -1,3 +1,5 @@
+open Lib
+
 let host_str (test : Ast.test) =
   match test.usr with
     | Some u -> u ^ "@" ^ test.src

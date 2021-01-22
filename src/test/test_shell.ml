@@ -1,7 +1,6 @@
-open Ast
-open Cmd
+open Lib.Ast
+open Lib.Cmd
 open OUnit2
-open Shell
 
 let test =
   {
@@ -12,7 +11,7 @@ let test =
     res = Accept;
   }
 
-let case exp t _ = assert_equal exp (Shell.cmd t)
+let case exp t _ = assert_equal exp (Eval.Shell.cmd t)
 
 let tests =
   [

@@ -1,0 +1,6 @@
+(tests
+  (names
+    test_bind
+    test_parser
+    test_shell)
+  (libraries lib eval parsed_ast ounit2))
